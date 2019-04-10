@@ -16,18 +16,6 @@
   <div><button id="capture">拍照</button></div>
   <canvas id="canvas" width="480" height="320"></canvas>
 <script>
-    // 初始化vConsole
-    window.vConsole = new window.VConsole({
-    defaultPlugins: ['system', 'network', 'element', 'storage'], // 可以在此设定要默认加载的面板
-    maxLogNumber: 1000,
-    // disableLogScrolling: true,
-    onReady: function() {
-        console.log('vConsole is ready.');
-    },
-    onClearLog: function() {
-        console.log('on clearLog');
-    }
-    });
   function getUserMedia(constrains,success,error) {
     if (navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices.getUserMedia(constrains).then(success).catch(error)
