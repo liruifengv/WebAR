@@ -67,15 +67,12 @@
   document.getElementById('capture').addEventListener('click',function () {
     context.drawImage(video,0,0,480,320)
   })
-    document.getElementById('getMedia').addEventListener('click',function () {
-        mediaPos = mediaPos === 1 ? 0: 1
-        if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia) {
-            getUserMedia({video:{width:480,height:320}},success,error)
-        } else {
-            alert('you bower id not getUserMedia')
-            console.log('you bower id not getUserMedia')
-        }
-  })
+    if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia) {
+        getUserMedia({video:{width:480,height:320}},success,error)
+    } else {
+        alert('you bower id not getUserMedia')
+        console.log('you bower id not getUserMedia')
+    }
 </script>
 </body>
 </html>
