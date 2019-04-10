@@ -70,10 +70,7 @@
     document.getElementById('getMedia').addEventListener('click',function () {
         mediaPos = mediaPos === 1 ? 0: 1
         if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia) {
-            getUserMedia({video:{width:480,height:320,optional: [{
-                sourceId: exArray[mediaPos] //0为前置摄像头，1为后置
-                }]
-            }},success,error)
+            getUserMedia({video:{width:480,height:320}},success,error)
         } else {
             alert('you bower id not getUserMedia')
             console.log('you bower id not getUserMedia')
