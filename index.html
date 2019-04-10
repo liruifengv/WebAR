@@ -34,12 +34,13 @@
     video.play()
   }
   function error(error) {
-    console.log(error.name,error.message)
+    alert(error.name,error.message)
   }
   
   if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia) {
     getUserMedia({video:{width:480,height:320}},success,error)
   } else {
+    alert('you bower id not getUserMedia')
     console.log('you bower id not getUserMedia')
   }
   document.getElementById('capture').addEventListener('click',function () {
