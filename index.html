@@ -28,18 +28,6 @@
         console.log('on clearLog');
     }
     });
-    var mediaPos = 0;
-    var exArray = []; //存储设备源ID
-    MediaStreamTrack.getSources(function (sourceInfos) {
-        for (var i = 0; i != sourceInfos.length; ++i) {
-            var sourceInfo = sourceInfos[i];
-            //这里会遍历audio,video，所以要加以区分
-            if (sourceInfo.kind === 'video') {
-                exArray.push(sourceInfo.id);
-            }
-        }
-    });
-
   function getUserMedia(constrains,success,error) {
     if (navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices.getUserMedia(constrains).then(success).catch(error)
