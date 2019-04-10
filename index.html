@@ -8,16 +8,26 @@
         border: 1px solid #ddd
       }
     </style>
+  <script src="/vconsole.min.js"></script>
 </head>
 <body>
   <div><button id="getMedia">调用摄像头</button></div>
   <video id="video" autoplay style="width:480px;height:320px;"></video>
   <div><button id="capture">拍照</button></div>
   <canvas id="canvas" width="480" height="320"></canvas>
-  <script src="/vconsole.min.js"></script>
 <script>
-      // init vConsole
-  var vConsole = new VConsole();
+    // 初始化vConsole
+    window.vConsole = new window.VConsole({
+    defaultPlugins: ['system', 'network', 'element', 'storage'], // 可以在此设定要默认加载的面板
+    maxLogNumber: 1000,
+    // disableLogScrolling: true,
+    onReady: function() {
+        console.log('vConsole is ready.');
+    },
+    onClearLog: function() {
+        console.log('on clearLog');
+    }
+    });
     var mediaPos = 0;
     var exArray = []; //存储设备源ID
     MediaStreamTrack.getSources(function (sourceInfos) {
