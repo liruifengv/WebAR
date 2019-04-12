@@ -4,51 +4,56 @@
     <meta charset="UTF-8">
     <title>调用摄像头拍照 </title>
     <style>
-      .video,.canvas{
-        border: 1px solid #ddd
-      }
+        #videoBox{position: absolute;left: 50%;top: 50%;z-index: 1;-webkit-transform: translate(-50%,-50%);-webkit-transform-origin: 50% 50%;}
+        #videoWrap{position: relative;left: 0;top: 0;background: #4CAABE;overflow: hidden;}
     </style>
   <script src="/vconsole.min.js"></script>
 </head>
 <body>
-  <div><button id="getMedia">调用摄像头</button></div>
-  <video id="video" autoplay style="width:480px;height:320px;"></video>
-  <div><button id="capture">拍照</button></div>
-  <canvas id="canvas" width="480" height="320"></canvas>
+    <div id="videoWrap">
+        <video autoplay="autoplay" id="videoBox"></video>
+    </div>
 <script>
-  function getUserMedia(constrains,success,error) {
-    if (navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices.getUserMedia(constrains).then(success).catch(error)
-    } else if (navigator.webkitGetUserMedia) {
-      navigator.webkitGetUserMedia(constrains,success.error)
-    } else if (navigator.mozGetUserMedia) {
-      navigator.mozkitGetUserMedia(constrains,success.error)
-    } else if (navigator.getUserMedia) {
-      navigator.getUserMedia(constrains,success,error)
-    }
-  }
-  let video = document.getElementById('video')
-  let canvas = document.getElementById('canvas')
-  let context = canvas.getContext('2d')
-  function success(stream) {
-    let CompatibleUrl = window.URL || window.webkitURL
-    video.src = CompatibleUrl.createObjectURL(stream)
-    video.play()
-  }
-  function error(error) {
-    alert(error.name,error.message)
-  }
-  
+    var videoWrap = document.getElementById('videoWrap');
+    videoWrap.style.width = window.innerWidth + 'px';
+    videoWrap.style.height = window.innerHeight + 'px';
+    getMedia();
+    function getMedia() {  
+        var exArray = []; //存储设备源ID  
+        if (navigator.getUserMedia) {  
+            MediaStreamTrack.getSources(function (sourceInfos) { 
+                for (var i = 0; i != sourceInfos.length; ++i) {  
+                    var sourceInfo = sourceInfos[i];  
+                    //这里会遍历audio,video，所以要加以区分  
+                    if (sourceInfo.kind === 'video') {  
+                        exArray.push(sourceInfo.id);  
+                    }  
+                }
+                navigator.getUserMedia({  
+                    'video': {  
+                        'optional': [{  
+                            'sourceId': exArray[1] //0为前置摄像头，1为后置  
+                        }]  
+                    },
+                    'audio':false  
+                }, successFunc, errorFunc); 
+            });
+        }
+    }  
+    var localStream;
+    function successFunc(stream) {  
+        document.getElementById('video').src = window.URL && window.URL.createObjectURL(stream) || stream;
+        localStream = stream;  
+    }  
 
-  document.getElementById('capture').addEventListener('click',function () {
-    context.drawImage(video,0,0,480,320)
-  })
-    if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia) {
-        getUserMedia({video:{width:480,height:320}},success,error)
-    } else {
-        alert('you bower id not getUserMedia')
-        console.log('you bower id not getUserMedia')
+    function errorFunc(e) {  
+        alert('Error！'+e);  
+    }  
+    function closeMedia() {  
+        localStream.stop();
+        document.getElementById('video').src = '';
     }
+
 </script>
 </body>
 </html>
