@@ -13,6 +13,9 @@
         <video autoplay="autoplay" id="videoBox"></video>
     </div>
 <script>
+    var videoWrap = document.getElementById('videoWrap');
+    videoWrap.style.width = window.innerWidth + 'px';
+    videoWrap.style.height = window.innerHeight + 'px';
   function getUserMedia(constrains,success,error) {
     if (navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices.getUserMedia(constrains).then(success).catch(error)
