@@ -34,13 +34,13 @@
     video.play()
   }
   function error(error) {
-    console.log(error.name,error.message)
+    alert('ERROR:',error.name,error.message)
   }
   
   if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia) {
     getUserMedia({video:true},success,error)
   } else {
-    console.log('you bower id not getUserMedia')
+    alert('you bower id not getUserMedia')
   }
 
 </script>
