@@ -13,53 +13,35 @@
         <video autoplay="autoplay" id="videoBox"></video>
     </div>
 <script>
-    var videoWrap = document.getElementById('videoWrap');
-    videoWrap.style.width = window.innerWidth + 'px';
-    videoWrap.style.height = window.innerHeight + 'px';
-    getMedia();
-    function getUserMedia(constrains,success,error) {
-        if (navigator.mediaDevices.getUserMedia) {
-        navigator.mediaDevices.getUserMedia(constrains).then(success).catch(error)
-        } else if (navigator.webkitGetUserMedia) {
-        navigator.webkitGetUserMedia(constrains,success.error)
-        } else if (navigator.mozGetUserMedia) {
-        navigator.mozkitGetUserMedia(constrains,success.error)
-        } else if (navigator.getUserMedia) {
-        navigator.getUserMedia(constrains,success,error)
-        }
+  function getUserMedia(constrains,success,error) {
+    if (navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices.getUserMedia(constrains).then(success).catch(error)
+    } else if (navigator.webkitGetUserMedia) {
+      navigator.webkitGetUserMedia(constrains,success.error)
+    } else if (navigator.mozGetUserMedia) {
+      navigator.mozkitGetUserMedia(constrains,success.error)
+    } else if (navigator.getUserMedia) {
+      navigator.getUserMedia(constrains,success,error)
     }
-    function getMedia() {  
-        var sourceId; //存储设备源ID  
-        if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia) {  
-            // const tracks = ediaStream.getVideoTracks();
-            // sourceId = tracks[1].id
-            getUserMedia({  
-                // 'video': {  
-                //     'optional': [{  
-                //         'sourceId': sourceId //0为前置摄像头，1为后置  
-                //     }]  
-                // },
-                // 'video': { facingMode: { exact: "environment" } },
-                'video': true,
-                'audio':false  
-            }, successFunc, errorFunc); 
-        }
-    }  
-    var localStream;
-    function successFunc(stream) {  
-        let CompatibleUrl = window.URL || window.webkitURL
-        document.getElementById('video').src = CompatibleUrl.createObjectURL(stream) || stream;
-        localStream = stream;  
-        document.getElementById('video').play()
-    }  
-
-    function errorFunc(e) {  
-        alert('Error！'+e);  
-    }  
-    function closeMedia() {  
-        localStream.stop();
-        document.getElementById('video').src = '';
+  }
+  let video = document.getElementById('videoBox')
+  function success(stream) {
+    if(!stream) {
+        alert('stream:',stream)
     }
+    let CompatibleUrl = window.URL || window.webkitURL
+    video.src = CompatibleUrl.createObjectURL(stream)
+    video.play()
+  }
+  function error(error) {
+    console.log(error.name,error.message)
+  }
+  
+  if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia) {
+    getUserMedia({video:true},success,error)
+  } else {
+    console.log('you bower id not getUserMedia')
+  }
 
 </script>
 </body>
