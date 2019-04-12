@@ -58,7 +58,7 @@
   if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia) {
       try {　　
           // 此处是可能产生例外的语句
-        getUserMedia({video:{ facingMode: { exact: "environment" },width: vwidth, height: vheight}},success,error)
+        getUserMedia({video:{ facingMode: { exact: "environment" }}},success,error)
         } catch (error) {　　
           // 此处是负责例外处理的语句
           alert(error);　　
