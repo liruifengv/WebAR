@@ -115,6 +115,9 @@
                         elements[0].parentNode.removeChild(elements[0]);
                         }
                     }
+                    console.log("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+                    console.log(rect.x, rect.y, rect.width, rect.height, rect.color);
+                    console.log("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
                     window.plot(rect.x, rect.y, rect.width, rect.height, rect.color);
                 });
             }
@@ -128,7 +131,7 @@
       rect.style.border = '2px solid ' + color;
       rect.style.width = w + 'px';
       rect.style.height = h + 'px';
-        let video = document.getElementById('videoBox')
+    let video = document.getElementById('videoBox')
       rect.style.left = (video.offsetLeft + x) + 'px';
       rect.style.top = (video.offsetTop + y) + 'px';
       rect.style.zIndex = 1001;
