@@ -41,7 +41,7 @@
   }
   
   if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia) {
-    getUserMedia({video:true},success,error)
+    getUserMedia({video:{ facingMode: { exact: "environment" } }},success,error)
   } else {
     alert('you bower id not getUserMedia')
   }
