@@ -14,8 +14,13 @@
     </div>
 <script>
     var videoWrap = document.getElementById('videoWrap');
+    let video = document.getElementById('videoBox')
+
     videoWrap.style.width = window.innerWidth + 'px';
     videoWrap.style.height = window.innerHeight + 'px';
+    video.style.width = window.innerWidth + 'px';
+    video.style.height = window.innerHeight + 'px';
+    
   function getUserMedia(constrains,success,error) {
     if (navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices.getUserMedia(constrains).then(success).catch(error)
@@ -27,7 +32,6 @@
       navigator.getUserMedia(constrains,success,error)
     }
   }
-  let video = document.getElementById('videoBox')
   function success(stream) {
     if(!stream) {
         alert('stream:',stream)
