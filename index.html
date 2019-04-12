@@ -84,7 +84,16 @@
         // 此处是出口语句
       }
 
-      var colors = new tracking.ColorTracker(['magenta', 'cyan', 'yellow']);
+
+   // 先注册颜色
+    tracking.ColorTracker.registerColor('red', function(r, g, b) {
+      if (r > 120 && g < 100 && b < 100) {
+        return true;
+      }
+      return false;
+    });
+
+      var colors = new tracking.ColorTracker(['red']);
 
          colors.on('track', function(event){
             if (event.data.length === 0)
@@ -95,10 +104,31 @@
             {
                 event.data.forEach(function(rect)
                 {
-                    alert(rect.x, rect.y, rect.height, rect.width, rect.color);
+                //如果rect不是undefined 代表有东西,则代表有框框,则可以删除
+                    if(rect != undefined) {
+                        var elements = document.getElementsByClassName('rect');
+                        while(elements.length > 0)
+                        {
+                        elements[0].parentNode.removeChild(elements[0]);
+                        }
+                    }
+                    window.plot(rect.x, rect.y, rect.width, rect.height, rect.color);
                 });
             }
             });
+
+   window.plot = function(x, y, w, h, color)
+    {
+      rect = document.createElement('div');
+      document.querySelector('body').appendChild(rect);
+      rect.classList.add('rect');
+      rect.style.border = '2px solid ' + color;
+      rect.style.width = w + 'px';
+      rect.style.height = h + 'px';
+      rect.style.left = (myVideo.offsetLeft + x) + 'px';
+      rect.style.top = (myVideo.offsetTop + y) + 'px';
+      rect.style.zIndex = 1001;
+    };
 
     tracking.track('#videoBox', colors);
 
