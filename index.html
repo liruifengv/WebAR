@@ -5,7 +5,7 @@
     <title>调用摄像头拍照 </title>
     <style>
         #videoBox{position: absolute;left: 0;top: 0;right:0;bottom:0;z-index: 1;}
-        #videoWrap{position: relative;left: 0;top: 0;background: #4CAABE;overflow: hidden;}
+        #videoWrap{position: absolute;left: 0;top: 0;right:0;bottom:0;background: #4CAABE;overflow: hidden;}
     </style>
 </head>
 <body>
@@ -16,8 +16,8 @@
     var videoWrap = document.getElementById('videoWrap');
     let video = document.getElementById('videoBox')
 
-    videoWrap.style.width = window.innerWidth + 'px';
-    videoWrap.style.height = window.innerHeight + 'px';
+    // videoWrap.style.width = window.innerWidth + 'px';
+    // videoWrap.style.height = window.innerHeight + 'px';
 
   function getUserMedia(constrains,success,error) {
     if (navigator.mediaDevices.getUserMedia) {
@@ -43,7 +43,7 @@
   }
   
   if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia) {
-    getUserMedia({video:{ facingMode: { exact: "environment" },width: window.innerWidth, height: window.innerHeight }},success,error)
+    getUserMedia({video:{ facingMode: { exact: "environment" }}},success,error)
   } else {
     alert('you bower id not getUserMedia')
   }
