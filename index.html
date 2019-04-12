@@ -9,9 +9,9 @@
             left: 50%;
             top: 50%;
             z-index: 1;
-            transform: translate(-50%,-50%);
             -webkit-transform: translate(-50%,-50%);
             -webkit-transform-origin: 50% 50%;
+            background: #ff0000
         };
         #videoWrap{position: relative;left: 0;top: 0;background: #4CAABE;overflow: hidden;}
     </style>
@@ -21,12 +21,17 @@
         <video autoplay="autoplay" id="videoBox"></video>
     </div>
 <script>
-    var videoWrap = document.getElementById('videoWrap');
+    try {　　
+        // 此处是可能产生例外的语句
+            var videoWrap = document.getElementById('videoWrap');
     let video = document.getElementById('videoBox')
 
     videoWrap.style.width = window.innerWidth + 'px';
     videoWrap.style.height = window.innerHeight + 'px';
-
+   video.style.width = window.innerWidth + 'px';
+    video.style.height = window.innerHeight + 'px';
+    var vwidth = window.innerWidth;
+    var vheight = window.innerHeight;
   function getUserMedia(constrains,success,error) {
     if (navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices.getUserMedia(constrains).then(success).catch(error)
@@ -51,10 +56,25 @@
   }
   
   if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia) {
-    getUserMedia({video:{ facingMode: { exact: "environment" }}},success,error)
+      try {　　
+          // 此处是可能产生例外的语句
+        getUserMedia({video:{ facingMode: { exact: "environment" },width: vwidth, height: vheight}},success,error)
+        } catch (error) {　　
+          // 此处是负责例外处理的语句
+          alert(error);　　
+        } finally {　　
+          // 此处是出口语句
+          console.log("执行完毕");
+        }
   } else {
     alert('you bower id not getUserMedia')
   }
+      } catch (error) {　　
+        // 此处是负责例外处理的语句
+        alert(error);　　
+      } finally {　　
+        // 此处是出口语句
+      }
 
 </script>
 </body>
