@@ -26,7 +26,8 @@
     <div id="videoWrap">
         <video autoplay="autoplay" id="videoBox"></video>
     </div>
-    <script src="./build/three.js"></script>
+    <script src="./three/three.js"></script>
+    <script src="./build/tracking.js"></script>
 <script>
     try {　　
         // 此处是可能产生例外的语句
@@ -82,33 +83,56 @@
       } finally {　　
         // 此处是出口语句
       }
-      		var camera, scene, renderer;
-			var mesh;
-			var scene = new THREE.Scene();
-			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
 
-			var renderer = new THREE.WebGLRenderer( { alpha: true } );
-			renderer.setSize( window.innerWidth, window.innerHeight );
-            renderer.setClearColor( 0x000000, 0 ); // the default
-			document.body.appendChild( renderer.domElement );
+      var colors = new tracking.ColorTracker(['magenta', 'cyan', 'yellow']);
 
-			var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-			var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-			var cube = new THREE.Mesh( geometry, material );
-			scene.add( cube );
+         colors.on('track', function(event){
+            if (event.data.length === 0)
+            {
+                // No colors were detected in this frame.
+            }
+            else
+            {
+                event.data.forEach(function(rect)
+                {
+                    alert(rect.x, rect.y, rect.height, rect.width, rect.color);
+                });
+            }
+            });
 
-			camera.position.z = 5;
+    tracking.track('#videoBox', colors);
 
-			var animate = function () {
-				requestAnimationFrame( animate );
 
-				cube.rotation.x += 0.01;
-				cube.rotation.y += 0.01;
+    function init3D() { 
+ 		var camera, scene, renderer;
+        var mesh;
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
 
-				renderer.render( scene, camera );
-			};
+        var renderer = new THREE.WebGLRenderer( { alpha: true } );
+        renderer.setSize( window.innerWidth, window.innerHeight );
+        renderer.setClearColor( 0x000000, 0 ); // the default
+        document.body.appendChild( renderer.domElement );
 
-			animate();
+        var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+        var material = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
+        var cube = new THREE.Mesh( geometry, material );
+        scene.add( cube );
+
+        camera.position.z = 5;
+
+        var animate = function () {
+            requestAnimationFrame( animate );
+
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+
+            renderer.render( scene, camera );
+        };
+
+        animate();
+    }
+    
 
 
 </script>
